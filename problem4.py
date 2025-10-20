@@ -33,6 +33,18 @@ def count_words(filename):
     # TODO: Open file and count words
     # Hint: Use split() to separate words
     pass
+    total_words = 0
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                words = line.split()
+                total_words += len(words)
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found!")
+        return 0
+    return total_words
+
+
 
 
 def count_lines(filename):
@@ -46,7 +58,15 @@ def count_lines(filename):
         int: Total number of lines
     """
     # TODO: Open file and count lines
-    pass
+    total_lines = 0
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                total_lines += 1
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found!")
+        return 0
+    return total_lines
 
 
 def count_characters(filename, include_spaces=True):
@@ -62,7 +82,18 @@ def count_characters(filename, include_spaces=True):
     """
     # TODO: Open file and count characters
     # If include_spaces is False, don't count spaces
-    pass
+    total_characters = 0
+    try:    
+        with open(filename, 'r') as file:
+            for line in file:
+                if include_spaces:
+                    total_characters += len(line)
+                else:
+                    total_characters += len(line.replace(" ", "").replace("\n", ""))
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found!")
+        return 0
+    return total_characters 
 
 
 def find_longest_word(filename):
@@ -77,7 +108,21 @@ def find_longest_word(filename):
     """
     # TODO: Find the longest word
     # Hint: You might need to remove punctuation
-    pass
+    longest_word = ""
+    import string
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                words = line.split()
+                for word in words:
+                    # Remove punctuation
+                    clean_word = word.strip(string.punctuation)
+                    if len(clean_word) > len(longest_word):
+                        longest_word = clean_word
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found!")
+        return ""
+    return longest_word 
 
 
 def word_frequency(filename):
@@ -94,6 +139,19 @@ def word_frequency(filename):
     import string
 
     frequency = {}
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                words = line.split()
+                for word in words:
+                    # Clean word
+                    clean_word = word.strip(string.punctuation).lower()
+                    if clean_word:
+                        frequency[clean_word] = frequency.get(clean_word, 0) + 1
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found!")
+        return {}   
+
 
     # TODO: Open file
     # TODO: Read all words
